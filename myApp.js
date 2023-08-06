@@ -13,8 +13,6 @@ require('dotenv').config()
 
 
 //root level logger
-
-
 app.use((req,res,next)=>{
 	console.log(`${req.method} ${req.path} - ${req.ip}`)
 	next()
@@ -41,15 +39,40 @@ app.get('/json',((req,res)=>{
 }))
 
 
+//app.get('/now',((req,res,next)=>{
+//   req.time = new Date().toString();
+//   console.log(req.time)
+ //  next();
+//},(req,res)=>{
+//  res.json({time:req.time})
+//}))
 
 
+//middleware timeserver
+app.get('/now',function(req,res,next){
+req.time = new Date().toString()
+	next()
+},function(req,res){
+res.json({time:req.time})
+
+})
+
+//echo server
+
+app.get('/:word/echo', ((req,res)=>{
+   word  = req.params.word
+	res.json({echo:word})
+}))
 
 
+//getting query params
 
-
-
-
-
+app.route('/name').post((req,res)=>{
+	
+}).get((req,res)=>{
+    const fullname = `${req.query.first} ${req.query.last}`
+	res.json({"name":fullname})
+})
 
 
 
