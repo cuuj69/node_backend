@@ -1,6 +1,8 @@
 let express = require('express');
 let app = express();
+let bodyParser = require('body-parser')
 require('dotenv').config()
+
 
 //log Hello World to the console
 //console.log("Hello World");
@@ -10,6 +12,10 @@ require('dotenv').config()
 //	res.send("Hello Express")
 
 //}))
+
+
+//bodyparser-middleware
+app.use(bodyParser.urlencoded({extended:false}))
 
 
 //root level logger
@@ -68,13 +74,15 @@ app.get('/:word/echo', ((req,res)=>{
 //getting query params
 
 app.route('/name').post((req,res)=>{
-	
+	let bothnames = `${req.body.first} ${req.body.last}`
+	res.json({name: bothnames})
 }).get((req,res)=>{
     const fullname = `${req.query.first} ${req.query.last}`
 	res.json({"name":fullname})
 })
 
 
+// 
 
 
 
